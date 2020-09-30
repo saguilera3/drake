@@ -49,6 +49,8 @@ LcmPlanInterpolator::LcmPlanInterpolator(const std::string& model_path,
                   target_demux->get_input_port(0));
   builder.Connect(target_demux->get_output_port(0),
                   command_sender->get_position_input_port());
+  builder.Connect(target_demux->get_output_port(0),
+                  command_sender->get_torque_input_port());
 
   // Build the system.
   builder.BuildInto(this);

@@ -1,0 +1,32 @@
+load(
+    "@drake//tools/skylark:drake_cc.bzl",
+    "drake_cc_binary",
+)
+
+package(
+    default_visibility = [":__subpackages__"],
+)
+
+drake_cc_binary(
+    name = "run_kuka_idc",
+    srcs = ["run_kuka_idc_demo.cc"],
+    data = [
+        "//manipulation/models/iiwa_description:models",
+    ],
+    deps = [
+        "//common:find_resource",
+        "//common:add_text_logging_gflags",
+        "//common:type_safe_index",
+        "//geometry:geometry_visualization",
+        "//lcm",
+        "//multibody/parsing",
+        "//multibody/plant",
+        "//systems/analysis",
+        "//systems/controllers",
+        "//systems/primitives:constant_vector_source",
+	"//systems/primitives:demultiplexer",
+	"//systems/primitives:multiplexer",
+        "//systems/primitives:sine",
+        "@gflags",
+    ],
+)

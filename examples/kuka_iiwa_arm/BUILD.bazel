@@ -93,6 +93,47 @@ drake_cc_binary(
 )
 
 drake_cc_binary(
+    name = "iiwa_controller_2",
+    srcs = ["iiwa_controller_2.cc"],
+    data = [
+        ":models",
+        "//manipulation/models/iiwa_description:models",
+    ],
+    deps = [
+        ":iiwa_common",
+        ":lcm_plan_interpolator",
+        "//common:add_text_logging_gflags",
+        "//lcm:drake_lcm",
+        "//lcmtypes:iiwa",
+        "@lcm",
+        "@lcmtypes_bot2_core",
+        "@lcmtypes_robotlocomotion",
+        "//systems/analysis:simulator",
+        "//systems/primitives:constant_vector_source",
+        "//systems/primitives:demultiplexer",
+        "//systems/primitives:multiplexer",
+        "//systems/primitives:sine",
+    ],
+)
+
+drake_cc_binary(
+    name = "iiwa_torque_controller",
+    srcs = ["iiwa_torque_controller.cc"],
+    data = [
+        ":models",
+        "//manipulation/models/iiwa_description:models",
+    ],
+    deps = [
+        ":iiwa_common",
+        ":lcm_plan_interpolator",
+        "//common:add_text_logging_gflags",
+        "//lcm:drake_lcm",
+        "//systems/analysis:simulator",
+	"//systems/primitives:constant_vector_source",
+    ],
+)
+
+drake_cc_binary(
     name = "kuka_simulation",
     srcs = ["kuka_simulation.cc"],
     add_test_rule = 1,
@@ -155,6 +196,32 @@ drake_cc_binary(
         "@lcm",
         "@lcmtypes_bot2_core",
         "@lcmtypes_robotlocomotion",
+    ],
+)
+
+drake_cc_binary(
+    name = "basic_torque_control",
+    srcs = ["basic_torque_control.cc"],
+    data = [
+        ":models",
+        "//manipulation/models/iiwa_description:models",
+    ],
+    deps = [
+        ":iiwa_common",
+        ":iiwa_lcm",
+        "//lcm",
+        ":lcm_plan_interpolator",
+        "//common:add_text_logging_gflags",
+        "//lcm:drake_lcm",
+        "//systems/analysis:simulator",
+        "//multibody/parsing",
+        "//multibody/plant",
+        "//systems/analysis",
+        "//systems/controllers",
+        "//systems/primitives:constant_vector_source",
+        "//systems/primitives:demultiplexer",
+        "//systems/primitives:multiplexer",
+        "//systems/primitives:sine",
     ],
 )
 

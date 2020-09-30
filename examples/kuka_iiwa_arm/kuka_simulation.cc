@@ -37,8 +37,8 @@ DEFINE_string(urdf, "", "Name of urdf to load");
 DEFINE_double(target_realtime_rate, 1.0,
               "Playback speed.  See documentation for "
               "Simulator::set_target_realtime_rate() for details.");
-DEFINE_bool(torque_control, false, "Simulate using torque control mode.");
-DEFINE_double(sim_dt, 3e-3,
+DEFINE_bool(torque_control, true, "Simulate using torque control mode.");
+DEFINE_double(sim_dt, 1e-3,
               "The time step to use for MultibodyPlant model "
               "discretization.");
 
@@ -137,7 +137,7 @@ int DoMain() {
                   plant_state_demux->get_input_port(0));
   builder.Connect(plant_state_demux->get_output_port(0),
                   status_sender->get_position_measured_input_port());
-  builder.Connect(plant_state_demux->get_output_port(0),
+  builder.Connect(plant_state_demux->get_output_port(1), // It was set to zero, but I think it should be 1, since it is the second output
                   status_sender->get_velocity_estimated_input_port());
   builder.Connect(command_receiver->get_commanded_position_output_port(),
                   status_sender->get_position_commanded_input_port());
